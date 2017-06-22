@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<Notifications_Archiver_LetterTab>Letters</Notifications_Archiver_LetterTab>
+
+	<Notifications_Archiver_MessageTab>Messages</Notifications_Archiver_MessageTab>
+
+	<Notifications_Archiver_Message_MostRecent>&lt;b&gt;&lt;color=orange&gt;[Latest Message]&lt;/color&gt;&lt;/b&gt;</Notifications_Archiver_Message_MostRecent>	
+
+	<Notifications_Archiver_Message_Oldest>&lt;b&gt;&lt;color=orange&gt;[Oldest Message]&lt;/color&gt;&lt;/b&gt;</Notifications_Archiver_Message_Oldest>
+
+	<Notifications_Archiver_TargetedMessage_Tooltip>You can click this message to track its original target.</Notifications_Archiver_TargetedMessage_Tooltip>
+
+</LanguageData>
