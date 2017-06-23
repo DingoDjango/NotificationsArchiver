@@ -5,26 +5,52 @@ namespace Notifications_Archiver
 {
 	public class Logger : GameComponent
 	{
-		private List<Letter> archivedLetters = new List<Letter>();
+		private List<MasterArchive> masterArchiveMembers = new List<MasterArchive>();
 
-		private List<ArchivedMessage> archivedMessages = new List<ArchivedMessage>();
-
-		public List<Letter> LoggedLetters
+		public List<MasterArchive> MasterArchives
 		{
 			get
 			{
-				return this.archivedLetters;
+				return this.masterArchiveMembers;
 			}
 		}
 
-		public List<ArchivedMessage> LoggedMessages
+		public void NotifyNewLetter(Letter letter)
 		{
-			get
+			//Assign to master archive
+			var letterArchive = new MasterArchive(letter);
+
+			if (!masterArchiveMembers.Contains(letterArchive))
 			{
-				return this.archivedMessages;
+				masterArchiveMembers.Add(letterArchive);
 			}
 		}
 
+		public void NotifyNewArchivedMessage(ArchivedMessage message)
+		{
+			//Assign to master archive
+			var messageArchive = new MasterArchive(message);
+
+			if (!masterArchiveMembers.Contains(messageArchive))
+			{
+				masterArchiveMembers.Add(messageArchive);
+			}
+		}
+
+		public override void ExposeData()
+		{
+			Scribe_Collections.Look<MasterArchive>(ref this.masterArchiveMembers, "masterArchiveMembers", LookMode.Deep);
+
+			if (Scribe.mode == LoadSaveMode.Saving)
+			{
+				if (masterArchiveMembers.RemoveAll((MasterArchive m) => m == null) != 0)
+				{
+					Log.Error("Notification Archiver :: Some MasterArchives were null.");
+				}
+			}
+		}
+
+		//Empty constructors due to A17 bug
 		public Logger()
 		{
 		}
@@ -33,38 +59,21 @@ namespace Notifications_Archiver
 		{
 		}
 
-		public void NotifyNewLetter(Letter letter)
+		public override void StartedNewGame()
 		{
-			if (!archivedLetters.Contains(letter))
-			{
-				archivedLetters.Add(letter);
-			}
+			NullListCheck();
 		}
 
-		public void NotifyNewArchivedMessage(ArchivedMessage message)
+		public override void LoadedGame()
 		{
-			if (!archivedMessages.Contains(message))
-			{
-				archivedMessages.Add(message);
-			}
+			NullListCheck();
 		}
 
-		public override void ExposeData()
+		private void NullListCheck()
 		{
-			Scribe_Collections.Look<Letter>(ref this.archivedLetters, "archivedLetters", LookMode.Deep);
-			Scribe_Collections.Look<ArchivedMessage>(ref this.archivedMessages, "archivedMessages", LookMode.Deep);
-
-			if (Scribe.mode == LoadSaveMode.Saving)
+			if (this.masterArchiveMembers == null)
 			{
-				if (archivedLetters.RemoveAll((Letter x) => x == null) != 0)
-				{
-					Log.Error("Notification Log :: Some Letters were null.");
-				}
-
-				if (archivedMessages.RemoveAll((ArchivedMessage m) => m == null) != 0)
-				{
-					Log.Error("Notification Log :: Some Messages were null.");
-				}
+				this.masterArchiveMembers = new List<MasterArchive>();
 			}
 		}
 	}

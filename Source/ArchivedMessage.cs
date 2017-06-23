@@ -24,9 +24,17 @@ namespace Notifications_Archiver
 		public void ExposeData()
 		{
 			Scribe_Values.Look(ref this.text, "text", null);
-			if (Scribe.mode == LoadSaveMode.Saving && this.lookTarget.HasThing && this.lookTarget.Thing.Destroyed)
+			if (Scribe.mode == LoadSaveMode.Saving)
 			{
-				this.lookTarget = GlobalTargetInfo.Invalid;
+				if (this.lookTarget.ThingDestroyed)
+				{
+					this.lookTarget = GlobalTargetInfo.Invalid;
+				}
+
+				if (this.lookTarget.HasThing && this.lookTarget.Thing.MapHeld == null)
+				{
+					this.lookTarget = GlobalTargetInfo.Invalid;
+				}
 			}
 			Scribe_TargetInfo.Look(ref this.lookTarget, "lookTarget");
 		}

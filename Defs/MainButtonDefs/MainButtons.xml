@@ -3,7 +3,7 @@
 
 	<MainButtonDef>
 		<defName>NotificationsArchive</defName>
-		<label>Notifications Archive</label>
+		<label>Archive</label>
 		<description>Access old notifications or recent ones that you may have hastily closed.</description>
 		<tabWindowClass>Notifications_Archiver.MainTabWindow_NotificationsArchive</tabWindowClass>
 		<order>75</order>

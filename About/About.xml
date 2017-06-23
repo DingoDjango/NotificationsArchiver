@@ -4,7 +4,7 @@
 	<author>Dingo</author>
 	<url>https://ludeon.com/forums/index.php?topic=26077</url>
 	<targetVersion>0.17.0</targetVersion>
-	<description>Adds a tab at the bottom of the screen titled "Notifications Archive".
+	<description>Adds a tab at the bottom of the screen titled "Archive".
 
 Allows you to browse and re-open old letters and messages.</description>
 </ModMetaData>

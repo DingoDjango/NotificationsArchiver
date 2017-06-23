@@ -11,4 +11,8 @@
 
 	<Notifications_Archiver_TargetedMessage_Tooltip>You can click this message to track its original target.</Notifications_Archiver_TargetedMessage_Tooltip>
 
+	<Notifications_Archiver_Date_Readout>{0} {1},\n{2}</Notifications_Archiver_Date_Readout>
+
+	<Notifications_Archiver_Date_None>Date\nunknown</Notifications_Archiver_Date_None>
+
 </LanguageData>
