@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<Notifications_Archiver_LetterTab>Lettres</Notifications_Archiver_LetterTab>
+
+	<Notifications_Archiver_MessageTab>Messages</Notifications_Archiver_MessageTab>
+
+	<Notifications_Archiver_Message_MostRecent>&lt;b&gt;&lt;color=orange&gt;[Dernier Message]&lt;/color&gt;&lt;/b&gt;</Notifications_Archiver_Message_MostRecent>	
+
+	<Notifications_Archiver_Message_Oldest>&lt;b&gt;&lt;color=orange&gt;[Message le plus ancien]&lt;/color&gt;&lt;/b&gt;</Notifications_Archiver_Message_Oldest>
+
+	<Notifications_Archiver_TargetedMessage_Tooltip>Cliquez sur le message pour voir ce qu'il ciblait originellement.</Notifications_Archiver_TargetedMessage_Tooltip>	
+
+	<Notifications_Archiver_Date_Readout>{0} {1},\n{2}</Notifications_Archiver_Date_Readout>
+
+	<Notifications_Archiver_Date_None>Date\ninconnue</Notifications_Archiver_Date_None>
+
+</LanguageData>

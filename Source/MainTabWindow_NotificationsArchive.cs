@@ -7,11 +7,12 @@ namespace Notifications_Archiver
 {
 	public class MainTabWindow_NotificationsArchive : MainTabWindow
 	{
-		private float contentHeight;
+		//Private members used to reference values, can be easily changed in the future
+		private const float listItemHeight = Letter.DrawHeight;
 
-		private Vector2 scrollPosition;
+		private const float dateWidth = 100f;
 
-		private float listItemSize = Letter.DrawHeight * 1.5f;
+		private float listItemTotalSize = listItemHeight * 1.5f;
 
 		private float edgeTextSpace = Text.LineHeight * 1.5f;
 
@@ -83,8 +84,11 @@ namespace Notifications_Archiver
 		public override void DoWindowContents(Rect inRect)
 		{
 			base.DoWindowContents(inRect);
-			this.contentHeight = 0f;
 
+			//Scrolling list variables
+			Vector2 scrollPosition = Vector2.zero;
+
+			//Filtered MasterArchive according to desired type
 			List<MasterArchive> letters = this.masterArchives.FindAll(archive => archive.letter != null);
 			List<MasterArchive> messages = this.masterArchives.FindAll(archive => archive.message != null);
 
@@ -101,7 +105,7 @@ namespace Notifications_Archiver
 			Rect viewRect = new Rect(outRect);
 			viewRect.xMax -= Letter.DrawWidth;
 
-			//Tab switcher taken from MainTabWindow_History
+			//Tab switcher (RimWorld.MainTabWindow_History)
 			List<TabRecord> tabsList = new List<TabRecord>();
 			tabsList.Add(new TabRecord(this.letterTabLabel, delegate
 			{
@@ -115,18 +119,19 @@ namespace Notifications_Archiver
 			//Draw tabs
 			TabDrawer.DrawTabs(tabsRect, tabsList);
 
-			//Guide text
+			//Draw edge text (translated)
 			Text.Anchor = TextAnchor.MiddleCenter;
-			Widgets.Label(new Rect(outRect.x, outRect.yMin - this.edgeTextSpace, outRect.width, this.edgeTextSpace), this.mostRecentLabel); //Latest, drawn at the top
-			Widgets.Label(new Rect(outRect.x, outRect.yMax, outRect.width, this.edgeTextSpace), this.oldestLabel); //Oldest, drawn at the bottom
-			Text.Anchor = TextAnchor.UpperLeft; //Return to RimWorld default
+			Widgets.Label(new Rect(outRect.x, outRect.yMin - this.edgeTextSpace, outRect.width, this.edgeTextSpace), this.mostRecentLabel); //Drawn above the scrollable list
+			Widgets.Label(new Rect(outRect.x, outRect.yMax, outRect.width, this.edgeTextSpace), this.oldestLabel); //Drawn below the scrollable list
+			Text.Anchor = TextAnchor.UpperLeft; //Reset
 
+			//Draw Letters list for Letters tab
 			if (curTab == Archive_Tab.Letters && !letters.NullOrEmpty())
 			{
-				this.contentHeight = (float)letters.Count * listItemSize;
-				viewRect.height = this.contentHeight; //Adjust virtual scrollable height
+				//Adjust virtual scrollable height
+				viewRect.height = (float)letters.Count * listItemTotalSize;
 
-				Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
+				Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, true);
 
 				float curY = viewRect.y;
 
@@ -136,18 +141,19 @@ namespace Notifications_Archiver
 
 					DrawLetter(viewRect, let, curY);
 
-					curY += listItemSize;
+					curY += listItemTotalSize;
 				}
 
 				Widgets.EndScrollView();
 			}
 
+			//Draw Messages list for Messages tab
 			else if (curTab == Archive_Tab.Messages && !messages.NullOrEmpty())
 			{
-				this.contentHeight = (float)messages.Count * listItemSize;
-				viewRect.height = this.contentHeight; //Adjust virtual scrollable height
+				//Adjust virtual scrollable height
+				viewRect.height = (float)messages.Count * listItemTotalSize;
 
-				Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
+				Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, true);
 
 				float curY = viewRect.y;
 
@@ -157,7 +163,7 @@ namespace Notifications_Archiver
 
 					DrawMessage(viewRect, msg, curY);
 
-					curY += listItemSize;
+					curY += listItemTotalSize;
 				}
 
 				Widgets.EndScrollView();
@@ -166,18 +172,16 @@ namespace Notifications_Archiver
 
 		private void DrawLetter(Rect originalRect, Letter curLetter, float topY)
 		{
-			string dateReadout = LetterDateReadout(curLetter);
-
 			//Draw date box
-			Rect dateRect = new Rect(originalRect.x, topY, 60f, Letter.DrawHeight);
+			Rect dateRect = new Rect(originalRect.x, topY, dateWidth, listItemHeight);
 
 			//Draw date info
 			Text.Anchor = TextAnchor.MiddleCenter;
 			Text.Font = GameFont.Tiny;
-			Widgets.Label(dateRect, dateReadout);
+			Widgets.Label(dateRect, LetterDateReadout(curLetter));
 
 			//Draw letter box
-			Rect letRect = new Rect(originalRect.x + dateRect.width + 5f, topY, Letter.DrawWidth, Letter.DrawHeight);
+			Rect letRect = new Rect(dateRect.x + dateRect.width + 5f, topY, Letter.DrawWidth, listItemHeight);
 
 			//Draw letter icon on letter box
 			GUI.color = curLetter.def.color;
@@ -186,11 +190,10 @@ namespace Notifications_Archiver
 			//Draw letter info
 			GUI.color = Color.white;
 			Text.Font = GameFont.Small;
-			string text = curLetter.label;
-			Rect infoRect = new Rect(letRect.x + (letRect.width * 1.5f), topY, originalRect.width - (letRect.width * 1.5f) - dateRect.width - 5f, letRect.height);
+			Rect infoRect = new Rect(letRect.x + letRect.width + 5f, topY, originalRect.width - dateRect.width - letRect.width - 10f, listItemHeight);
 			Text.Anchor = TextAnchor.MiddleLeft;
 			Text.Font = GameFont.Small;
-			Widgets.Label(infoRect, text);
+			Widgets.Label(infoRect, curLetter.label);
 			Text.Anchor = TextAnchor.UpperLeft; //Reset
 
 			//Highlight and button
@@ -215,18 +218,16 @@ namespace Notifications_Archiver
 
 		private void DrawMessage(Rect originalRect, ArchivedMessage message, float topY)
 		{
-			string dateReadout = MessageDateReadout(message);
-
 			//Draw date box
-			Rect dateRect = new Rect(originalRect.x, topY, 60f, Letter.DrawHeight);
+			Rect dateRect = new Rect(originalRect.x, topY, dateWidth, listItemHeight);
 
 			//Draw date info
 			Text.Anchor = TextAnchor.MiddleCenter;
 			Text.Font = GameFont.Tiny;
-			Widgets.Label(dateRect, dateReadout);
+			Widgets.Label(dateRect, MessageDateReadout(message));
 
 			//Draw message rect
-			Rect msgRect = new Rect(originalRect.x + dateRect.width + 5f, topY, originalRect.width - dateRect.width - 5f, Letter.DrawHeight);
+			Rect msgRect = new Rect(dateRect.x + dateRect.width + 5f, topY, originalRect.width - dateRect.width - 5f, listItemHeight);
 
 			//Draw message content
 			Widgets.Label(msgRect, message.text);
