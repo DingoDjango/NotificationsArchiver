@@ -5,9 +5,9 @@
 
 	<Notifications_Archiver_MessageTab>Messages</Notifications_Archiver_MessageTab>
 
-	<Notifications_Archiver_Message_MostRecent>&lt;b&gt;&lt;color=orange&gt;[Dernier Message]&lt;/color&gt;&lt;/b&gt;</Notifications_Archiver_Message_MostRecent>	
+	<Notifications_Archiver_Message_MostRecent>&lt;b&gt;[Dernier Message]&lt;/b&gt;</Notifications_Archiver_Message_MostRecent>	
 
-	<Notifications_Archiver_Message_Oldest>&lt;b&gt;&lt;color=orange&gt;[Message le plus ancien]&lt;/color&gt;&lt;/b&gt;</Notifications_Archiver_Message_Oldest>
+	<Notifications_Archiver_Message_Oldest>&lt;b&gt;[Message le plus ancien]&lt;/b&gt;</Notifications_Archiver_Message_Oldest>
 
 	<Notifications_Archiver_TargetedMessage_Tooltip>Cliquez sur le message pour voir ce qu'il ciblait originellement.</Notifications_Archiver_TargetedMessage_Tooltip>	
 

@@ -9,7 +9,7 @@ namespace Notifications_Archiver
 	{
 		public int dateDayofSeason;
 
-		public string dateQuadrum;
+		public Quadrum dateQuadrum;
 
 		public int dateYear;
 
@@ -21,7 +21,7 @@ namespace Notifications_Archiver
 		public MasterArchive()
 		{
 			this.dateDayofSeason = -1;
-			this.dateQuadrum = null;
+			this.dateQuadrum = Quadrum.Undefined;
 			this.dateYear = -1;
 			this.letter = null;
 			this.message = null;
@@ -68,14 +68,14 @@ namespace Notifications_Archiver
 			if (Find.TickManager.gameStartAbsTick == 0)
 			{
 				this.dateDayofSeason = GenDate.DayOfSeason((long)Find.TickManager.TicksGame, location.x) + 1;
-				this.dateQuadrum = GenDate.Quadrum((long)Find.TickManager.TicksGame, location.x).Label();
+				this.dateQuadrum = GenDate.Quadrum((long)Find.TickManager.TicksGame, location.x);
 				this.dateYear = GenDate.Year((long)Find.TickManager.TicksGame, location.x);
 			}
 
 			else
 			{
 				this.dateDayofSeason = GenDate.DayOfSeason((long)Find.TickManager.TicksAbs, location.x) + 1;
-				this.dateQuadrum = GenDate.Quadrum((long)Find.TickManager.TicksAbs, location.x).Label();
+				this.dateQuadrum = GenDate.Quadrum((long)Find.TickManager.TicksAbs, location.x);
 				this.dateYear = GenDate.Year((long)Find.TickManager.TicksAbs, location.x);
 			}
 		}
@@ -83,7 +83,7 @@ namespace Notifications_Archiver
 		public void ExposeData()
 		{
 			Scribe_Values.Look<int>(ref this.dateDayofSeason, "dateDayofSeason", -1);
-			Scribe_Values.Look<string>(ref this.dateQuadrum, "dateQuadrum", null);
+			Scribe_Values.Look<Quadrum>(ref this.dateQuadrum, "dateQuadrum", Quadrum.Undefined);
 			Scribe_Values.Look<int>(ref this.dateYear, "dateYear", -1);
 			Scribe_Deep.Look<Letter>(ref this.letter, "letter", new object[0]);
 			Scribe_Deep.Look<ArchivedMessage>(ref this.message, "message", new object[0]);

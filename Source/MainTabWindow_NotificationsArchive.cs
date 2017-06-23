@@ -18,6 +18,8 @@ namespace Notifications_Archiver
 
 		private List<MasterArchive> masterArchives = Current.Game.GetComponent<Logger>().MasterArchives;
 
+		private Vector2 scrollPosition;
+
 		private enum Archive_Tab : byte
 		{
 			Letters,
@@ -60,11 +62,11 @@ namespace Notifications_Archiver
 
 		private string MasterDate(MasterArchive master)
 		{
-			if (master.dateDayofSeason != -1 && master.dateQuadrum != null && master.dateYear != -1)
+			if (master.dateDayofSeason != -1 && master.dateQuadrum != Quadrum.Undefined && master.dateYear != -1)
 			{
 				return "Notifications_Archiver_Date_Readout".Translate(new object[]
 			{
-				master.dateQuadrum,
+				master.dateQuadrum.Label(),
 				master.dateDayofSeason,
 				master.dateYear
 			});
@@ -84,9 +86,6 @@ namespace Notifications_Archiver
 		public override void DoWindowContents(Rect inRect)
 		{
 			base.DoWindowContents(inRect);
-
-			//Scrolling list variables
-			Vector2 scrollPosition = Vector2.zero;
 
 			//Filtered MasterArchive according to desired type
 			List<MasterArchive> letters = this.masterArchives.FindAll(archive => archive.letter != null);
@@ -120,10 +119,13 @@ namespace Notifications_Archiver
 			TabDrawer.DrawTabs(tabsRect, tabsList);
 
 			//Draw edge text (translated)
+			Text.Font = GameFont.Small;
 			Text.Anchor = TextAnchor.MiddleCenter;
+			GUI.color = new Color32(255, 165, 0, 255); //Orange
 			Widgets.Label(new Rect(outRect.x, outRect.yMin - this.edgeTextSpace, outRect.width, this.edgeTextSpace), this.mostRecentLabel); //Drawn above the scrollable list
 			Widgets.Label(new Rect(outRect.x, outRect.yMax, outRect.width, this.edgeTextSpace), this.oldestLabel); //Drawn below the scrollable list
 			Text.Anchor = TextAnchor.UpperLeft; //Reset
+			GUI.color = Color.white; //Reset
 
 			//Draw Letters list for Letters tab
 			if (curTab == Archive_Tab.Letters && !letters.NullOrEmpty())
@@ -131,7 +133,7 @@ namespace Notifications_Archiver
 				//Adjust virtual scrollable height
 				viewRect.height = (float)letters.Count * listItemTotalSize;
 
-				Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, true);
+				Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
 
 				float curY = viewRect.y;
 
@@ -153,7 +155,7 @@ namespace Notifications_Archiver
 				//Adjust virtual scrollable height
 				viewRect.height = (float)messages.Count * listItemTotalSize;
 
-				Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, true);
+				Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
 
 				float curY = viewRect.y;
 
@@ -192,12 +194,11 @@ namespace Notifications_Archiver
 			Text.Font = GameFont.Small;
 			Rect infoRect = new Rect(letRect.x + letRect.width + 5f, topY, originalRect.width - dateRect.width - letRect.width - 10f, listItemHeight);
 			Text.Anchor = TextAnchor.MiddleLeft;
-			Text.Font = GameFont.Small;
 			Widgets.Label(infoRect, curLetter.label);
 			Text.Anchor = TextAnchor.UpperLeft; //Reset
 
 			//Highlight and button
-			Rect buttonRect = new Rect(letRect.x, letRect.y, originalRect.width, letRect.height);
+			Rect buttonRect = new Rect(letRect.x, letRect.y, letRect.width + infoRect.width + 5f, listItemHeight);
 			Widgets.DrawHighlightIfMouseover(buttonRect);
 			var curChoiceLetter = curLetter as ChoiceLetter;
 			if (curChoiceLetter != null) //Tooltip with some of the notification text for quality of life
