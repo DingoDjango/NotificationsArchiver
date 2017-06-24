@@ -12,13 +12,16 @@ namespace Notifications_Archiver
 	{
 		public static void Postfix(string text, GlobalTargetInfo lookTarget, MessageSound sound)
 		{
-			var msg = new ArchivedMessage(text, lookTarget);
-
-			var logger = Current.Game.GetComponent<Logger>();
-
-			if (logger != null)
+			if (Current.ProgramState == ProgramState.Playing)
 			{
-				logger.NotifyNewArchivedMessage(msg);
+				var msg = new ArchivedMessage(text, lookTarget);
+
+				var logger = Current.Game.GetComponent<Logger>();
+
+				if (logger != null)
+				{
+					logger.NotifyNewArchivedMessage(msg);
+				}
 			}
 		}
 	}
@@ -30,13 +33,16 @@ namespace Notifications_Archiver
 	{
 		public static void Postfix(string text, MessageSound sound)
 		{
-			var plainMsg = new ArchivedMessage(text, GlobalTargetInfo.Invalid);
-
-			var logger = Current.Game.GetComponent<Logger>();
-
-			if (logger != null)
+			if (Current.ProgramState == ProgramState.Playing)
 			{
-				logger.NotifyNewArchivedMessage(plainMsg);
+				var plainMsg = new ArchivedMessage(text, GlobalTargetInfo.Invalid);
+
+				var logger = Current.Game.GetComponent<Logger>();
+
+				if (logger != null)
+				{
+					logger.NotifyNewArchivedMessage(plainMsg);
+				}
 			}
 		}
 	}
