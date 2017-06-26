@@ -11,11 +11,14 @@ namespace Notifications_Archiver
 	{
 		public static void Postfix(Letter let, string debugInfo)
 		{
-			var logger = Current.Game.GetComponent<Logger>();
-
-			if (logger != null)
+			if (Current.ProgramState == ProgramState.Playing)
 			{
-				logger.NotifyNewLetter(let);
+				var logger = Current.Game.GetComponent<Logger>();
+
+				if (logger != null)
+				{
+					logger.NotifyNewLetter(let);
+				}
 			}
 		}
 	}

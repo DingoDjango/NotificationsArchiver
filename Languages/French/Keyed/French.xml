@@ -5,10 +5,6 @@
 
 	<Notifications_Archiver_MessageTab>Messages</Notifications_Archiver_MessageTab>
 
-	<Notifications_Archiver_Message_MostRecent>&lt;b&gt;[Dernier Message]&lt;/b&gt;</Notifications_Archiver_Message_MostRecent>	
-
-	<Notifications_Archiver_Message_Oldest>&lt;b&gt;[Message le plus ancien]&lt;/b&gt;</Notifications_Archiver_Message_Oldest>
-
 	<Notifications_Archiver_TargetedMessage_Tooltip>Cliquez sur le message pour voir ce qu'il ciblait originellement.</Notifications_Archiver_TargetedMessage_Tooltip>	
 
 	<Notifications_Archiver_Date_Readout>{0} {1},\n{2}</Notifications_Archiver_Date_Readout>

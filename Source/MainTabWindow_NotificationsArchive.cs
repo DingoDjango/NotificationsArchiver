@@ -7,14 +7,11 @@ namespace Notifications_Archiver
 {
 	public class MainTabWindow_NotificationsArchive : MainTabWindow
 	{
-		//Private members used to reference values, can be easily changed in the future
-		private const float listItemHeight = Letter.DrawHeight;
+		private const float listItemSize = 45f; //Verse.Letter.DrawHeight * 1.5
 
-		private const float dateWidth = 100f;
+		private const float adjustedLetterWidth = 57f; //Verse.Letter.DrawWidth * 1.5
 
-		private float listItemTotalSize = listItemHeight * 1.5f;
-
-		private float edgeTextSpace = Text.LineHeight * 1.5f;
+		private const float dateWidth = 100f; //Relatively wide to account for some languages' date strings
 
 		private List<MasterArchive> masterArchives = Current.Game.GetComponent<Logger>().MasterArchives;
 
@@ -97,12 +94,11 @@ namespace Notifications_Archiver
 
 			//Outer Rect for scrolling list
 			Rect outRect = new Rect(inRect);
-			outRect.yMin += TabDrawer.TabHeight + this.edgeTextSpace;
-			outRect.yMax -= this.edgeTextSpace;
+			outRect.yMin += TabDrawer.TabHeight + 10f;
 
 			//Virtual Rect for scrolling list
 			Rect viewRect = new Rect(outRect);
-			viewRect.xMax -= Letter.DrawWidth;
+			viewRect.xMax -= 40f;
 
 			//Tab switcher (RimWorld.MainTabWindow_History)
 			List<TabRecord> tabsList = new List<TabRecord>();
@@ -118,20 +114,11 @@ namespace Notifications_Archiver
 			//Draw tabs
 			TabDrawer.DrawTabs(tabsRect, tabsList);
 
-			//Draw edge text (translated)
-			Text.Font = GameFont.Small;
-			Text.Anchor = TextAnchor.MiddleCenter;
-			GUI.color = new Color32(255, 165, 0, 255); //Orange
-			Widgets.Label(new Rect(outRect.x, outRect.yMin - this.edgeTextSpace, outRect.width, this.edgeTextSpace), this.mostRecentLabel); //Drawn above the scrollable list
-			Widgets.Label(new Rect(outRect.x, outRect.yMax, outRect.width, this.edgeTextSpace), this.oldestLabel); //Drawn below the scrollable list
-			Text.Anchor = TextAnchor.UpperLeft; //Reset
-			GUI.color = Color.white; //Reset
-
 			//Draw Letters list for Letters tab
 			if (curTab == Archive_Tab.Letters && !letters.NullOrEmpty())
 			{
 				//Adjust virtual scrollable height
-				viewRect.height = (float)letters.Count * listItemTotalSize;
+				viewRect.height = (float)letters.Count * listItemSize;
 
 				Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
 
@@ -141,9 +128,18 @@ namespace Notifications_Archiver
 				{
 					var let = letters[i].letter;
 
-					DrawLetter(viewRect, let, curY);
+					Rect listRect = new Rect(viewRect.x, curY, viewRect.width, listItemSize);
 
-					curY += listItemTotalSize;
+					if (i % 2 == 0)
+					{
+						Widgets.DrawAltRect(listRect);
+					}
+
+					Rect letRect = listRect.ContractedBy(1f);
+
+					DrawLetter(letRect, let);
+
+					curY += listItemSize;
 				}
 
 				Widgets.EndScrollView();
@@ -153,7 +149,7 @@ namespace Notifications_Archiver
 			else if (curTab == Archive_Tab.Messages && !messages.NullOrEmpty())
 			{
 				//Adjust virtual scrollable height
-				viewRect.height = (float)messages.Count * listItemTotalSize;
+				viewRect.height = (float)messages.Count * listItemSize;
 
 				Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
 
@@ -163,44 +159,51 @@ namespace Notifications_Archiver
 				{
 					var msg = messages[j].message;
 
-					DrawMessage(viewRect, msg, curY);
+					Rect listRect = new Rect(viewRect.x, curY, viewRect.width, listItemSize);
 
-					curY += listItemTotalSize;
+					if (j % 2 == 0)
+					{
+						Widgets.DrawAltRect(listRect);
+					}
+
+					Rect msgRect = listRect.ContractedBy(1f);
+
+					DrawMessage(msgRect, msg);
+
+					curY += listItemSize;
 				}
 
 				Widgets.EndScrollView();
 			}
 		}
 
-		private void DrawLetter(Rect originalRect, Letter curLetter, float topY)
+		private void DrawLetter(Rect rect, Letter letter)
 		{
-			//Draw date box
-			Rect dateRect = new Rect(originalRect.x, topY, dateWidth, listItemHeight);
+			//Draw date rect
+			Rect dateRect = new Rect(rect.x, rect.y, dateWidth, rect.height);
 
 			//Draw date info
 			Text.Anchor = TextAnchor.MiddleCenter;
 			Text.Font = GameFont.Tiny;
-			Widgets.Label(dateRect, LetterDateReadout(curLetter));
+			Widgets.Label(dateRect, LetterDateReadout(letter));
 
-			//Draw letter box
-			Rect letRect = new Rect(dateRect.x + dateRect.width + 5f, topY, Letter.DrawWidth, listItemHeight);
+			//Draw letter rect
+			Rect letRect = new Rect(rect.x + dateRect.width + 5f, rect.y, adjustedLetterWidth, rect.height);
 
-			//Draw letter icon on letter box
-			GUI.color = curLetter.def.color;
-			GUI.DrawTexture(letRect, curLetter.def.Icon);
+			//Draw letter icon on letter rect
+			GUI.color = letter.def.color;
+			GUI.DrawTexture(letRect, letter.def.Icon);
 
 			//Draw letter info
 			GUI.color = Color.white;
 			Text.Font = GameFont.Small;
-			Rect infoRect = new Rect(letRect.x + letRect.width + 5f, topY, originalRect.width - dateRect.width - letRect.width - 10f, listItemHeight);
-			Text.Anchor = TextAnchor.MiddleLeft;
-			Widgets.Label(infoRect, curLetter.label);
+			Rect infoRect = new Rect(letRect.x + letRect.width + 5f, rect.y, rect.width - dateRect.width - letRect.width - 10f, rect.height);
+			Widgets.Label(infoRect, letter.label);
 			Text.Anchor = TextAnchor.UpperLeft; //Reset
 
 			//Highlight and button
-			Rect buttonRect = new Rect(letRect.x, letRect.y, letRect.width + infoRect.width + 5f, listItemHeight);
-			Widgets.DrawHighlightIfMouseover(buttonRect);
-			var curChoiceLetter = curLetter as ChoiceLetter;
+			Widgets.DrawHighlightIfMouseover(rect);
+			var curChoiceLetter = letter as ChoiceLetter;
 			if (curChoiceLetter != null) //Tooltip with some of the notification text for quality of life
 			{
 				string tooltipText = curChoiceLetter.text;
@@ -208,19 +211,19 @@ namespace Notifications_Archiver
 				{
 					tooltipText = tooltipText.TrimmedToLength(100) + "...";
 				}
-				TooltipHandler.TipRegion(buttonRect, tooltipText);
+				TooltipHandler.TipRegion(rect, tooltipText);
 			}
 
-			if (Widgets.ButtonInvisible(buttonRect, false))
+			if (Widgets.ButtonInvisible(rect, false))
 			{
-				curLetter.OpenLetter();
+				letter.OpenLetter();
 			}
 		}
 
-		private void DrawMessage(Rect originalRect, ArchivedMessage message, float topY)
+		private void DrawMessage(Rect rect, ArchivedMessage message)
 		{
 			//Draw date box
-			Rect dateRect = new Rect(originalRect.x, topY, dateWidth, listItemHeight);
+			Rect dateRect = new Rect(rect.x, rect.y, dateWidth, rect.height);
 
 			//Draw date info
 			Text.Anchor = TextAnchor.MiddleCenter;
@@ -228,7 +231,7 @@ namespace Notifications_Archiver
 			Widgets.Label(dateRect, MessageDateReadout(message));
 
 			//Draw message rect
-			Rect msgRect = new Rect(dateRect.x + dateRect.width + 5f, topY, originalRect.width - dateRect.width - 5f, listItemHeight);
+			Rect msgRect = new Rect(rect.x + dateRect.width + 5f, rect.y, rect.width - dateRect.width - 5f, rect.height);
 
 			//Draw message content
 			Widgets.Label(msgRect, message.text);
@@ -238,10 +241,10 @@ namespace Notifications_Archiver
 			//Thing target button and highlight if lookTarget exists
 			if (message.lookTarget.IsValid)
 			{
-				Widgets.DrawHighlightIfMouseover(msgRect);
-				TooltipHandler.TipRegion(msgRect, this.targetedMessageTooltipText);
+				Widgets.DrawHighlightIfMouseover(rect);
+				TooltipHandler.TipRegion(rect, this.targetedMessageTooltipText);
 
-				if (Widgets.ButtonInvisible(msgRect, false))
+				if (Widgets.ButtonInvisible(rect, false))
 				{
 					CameraJumper.TryJumpAndSelect(message.lookTarget);
 				}

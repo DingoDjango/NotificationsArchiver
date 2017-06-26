@@ -5,10 +5,6 @@
 
 	<Notifications_Archiver_MessageTab>Mitteilungen</Notifications_Archiver_MessageTab>
 
-	<Notifications_Archiver_Message_MostRecent>&lt;b&gt;[Neuste Mitteilung]&lt;/b&gt;</Notifications_Archiver_Message_MostRecent>
-
-	<Notifications_Archiver_Message_Oldest>&lt;b&gt;[Älteste Mitteilung]&lt;/b&gt;</Notifications_Archiver_Message_Oldest>
-
 	<Notifications_Archiver_TargetedMessage_Tooltip>Klicke auf die Mitteilung, um sie aufzurufen.</Notifications_Archiver_TargetedMessage_Tooltip>
 
 	<Notifications_Archiver_Date_Readout>{0} {1},\n{2}</Notifications_Archiver_Date_Readout>
