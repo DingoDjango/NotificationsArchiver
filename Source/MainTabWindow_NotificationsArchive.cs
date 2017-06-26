@@ -9,8 +9,6 @@ namespace Notifications_Archiver
 	{
 		private const float listItemSize = 45f; //Verse.Letter.DrawHeight * 1.5
 
-		private const float adjustedLetterWidth = 57f; //Verse.Letter.DrawWidth * 1.5
-
 		private const float dateWidth = 100f; //Relatively wide to account for some languages' date strings
 
 		private List<MasterArchive> masterArchives = Current.Game.GetComponent<Logger>().MasterArchives;
@@ -188,7 +186,7 @@ namespace Notifications_Archiver
 			Widgets.Label(dateRect, LetterDateReadout(letter));
 
 			//Draw letter rect
-			Rect letRect = new Rect(rect.x + dateRect.width + 5f, rect.y, adjustedLetterWidth, rect.height);
+			Rect letRect = new Rect(rect.x + dateRect.width + 5f, rect.y + 7.5f, Letter.DrawWidth, Letter.DrawHeight);
 
 			//Draw letter icon on letter rect
 			GUI.color = letter.def.color;
