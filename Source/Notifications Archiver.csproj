@@ -54,7 +54,7 @@
     <Compile Include="ArchivedMessage.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="MainTabWindow_NotificationsArchive.cs" />
+    <Compile Include="MainTabWindow_Archive.cs" />
     <Compile Include="Patch_LetterStack.cs" />
     <Compile Include="Patch_Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

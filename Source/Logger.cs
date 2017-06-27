@@ -5,45 +5,36 @@ namespace Notifications_Archiver
 {
 	public class Logger : GameComponent
 	{
-		private List<MasterArchive> masterArchiveMembers = new List<MasterArchive>();
+		private List<MasterArchive> archives = new List<MasterArchive>();
 
 		public List<MasterArchive> MasterArchives
 		{
 			get
 			{
-				return this.masterArchiveMembers;
+				return this.archives;
 			}
 		}
 
+		//MasterArchive assignment, used by patches
 		public void NotifyNewLetter(Letter letter)
 		{
-			//Assign to master archive
 			var letterArchive = new MasterArchive(letter);
-
-			if (!masterArchiveMembers.Contains(letterArchive))
-			{
-				masterArchiveMembers.Add(letterArchive);
-			}
+			this.archives.Add(letterArchive);
 		}
 
 		public void NotifyNewArchivedMessage(ArchivedMessage message)
 		{
-			//Assign to master archive
 			var messageArchive = new MasterArchive(message);
-
-			if (!masterArchiveMembers.Contains(messageArchive))
-			{
-				masterArchiveMembers.Add(messageArchive);
-			}
+			this.archives.Add(messageArchive);
 		}
 
 		public override void ExposeData()
 		{
-			Scribe_Collections.Look<MasterArchive>(ref this.masterArchiveMembers, "masterArchiveMembers", LookMode.Deep);
+			Scribe_Collections.Look<MasterArchive>(ref this.archives, "masterArchiveMembers", LookMode.Deep);
 
 			if (Scribe.mode == LoadSaveMode.Saving)
 			{
-				if (masterArchiveMembers.RemoveAll((MasterArchive m) => m == null) != 0)
+				if (archives.RemoveAll((MasterArchive m) => m == null) != 0)
 				{
 					Log.Error("Notification Archiver :: Some MasterArchives were null.");
 				}
@@ -71,9 +62,9 @@ namespace Notifications_Archiver
 
 		private void NullListCheck()
 		{
-			if (this.masterArchiveMembers == null)
+			if (this.archives == null)
 			{
-				this.masterArchiveMembers = new List<MasterArchive>();
+				this.archives = new List<MasterArchive>();
 			}
 		}
 	}
