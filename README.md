@@ -1,4 +1,4 @@
-![Notifications Archiver](http://i.imgur.com/oSa2umD.png)
+![Notifications Archiver](http://i.imgur.com/yeEbbQ9.png)
 
 Adds a tab at the bottom of the screen titled "Archive".
 
