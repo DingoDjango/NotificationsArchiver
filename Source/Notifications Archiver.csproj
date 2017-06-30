@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyStandardLetter.cs" />
     <Compile Include="MasterArchive.cs" />
     <Compile Include="ArchivedMessage.cs" />
     <Compile Include="Controller.cs" />

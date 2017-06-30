@@ -23,6 +23,26 @@ namespace Notifications_Archiver
 		public void NotifyNewLetter(Letter letter)
 		{
 			var letterArchive = new MasterArchive(letter);
+
+			if (letter is ChoiceLetter && letter.GetType() != typeof(StandardLetter))
+			{
+				var choiceLet = letterArchive.letter as ChoiceLetter;
+
+				//Dummify complex letters to avoid players exploiting the archiver
+				if (choiceLet.TimeoutActive)
+				{
+					var toDummyLetter = new DummyStandardLetter();
+					toDummyLetter.def = choiceLet.def;
+					toDummyLetter.label = choiceLet.label;
+					toDummyLetter.lookTarget = choiceLet.lookTarget;
+					toDummyLetter.disappearAtTick = -1;
+					toDummyLetter.title = choiceLet.title;
+					toDummyLetter.text = choiceLet.text;
+
+					letterArchive.letter = toDummyLetter;
+				}
+			}
+
 			this.archives.Add(letterArchive);
 		}
 
