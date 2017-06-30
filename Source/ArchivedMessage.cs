@@ -23,7 +23,6 @@ namespace Notifications_Archiver
 
 		public void ExposeData()
 		{
-			Scribe_Values.Look(ref this.text, "text", null);
 			if (Scribe.mode == LoadSaveMode.Saving)
 			{
 				if (this.lookTarget.ThingDestroyed)
@@ -36,6 +35,8 @@ namespace Notifications_Archiver
 					this.lookTarget = GlobalTargetInfo.Invalid;
 				}
 			}
+
+			Scribe_Values.Look(ref this.text, "text", null);
 			Scribe_TargetInfo.Look(ref this.lookTarget, "lookTarget");
 		}
 	}

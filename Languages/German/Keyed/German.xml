@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-	<Notifications_Archiver_LetterTab>Briefe</Notifications_Archiver_LetterTab>
+	<Notifications_Archiver_ShowLetters>Briefe anzeigen</Notifications_Archiver_ShowLetters>
 
-	<Notifications_Archiver_MessageTab>Mitteilungen</Notifications_Archiver_MessageTab>
+	<Notifications_Archiver_ShowMessages>Mitteilungen anzeigen</Notifications_Archiver_ShowMessages>
+
+	<Notifications_Archiver_TextFilter>Textfilter</Notifications_Archiver_TextFilter>
 
 	<Notifications_Archiver_TargetedMessage_Tooltip>Klicke auf die Mitteilung, um sie aufzurufen.</Notifications_Archiver_TargetedMessage_Tooltip>
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-	<Notifications_Archiver_LetterTab>Lettres</Notifications_Archiver_LetterTab>
+	<Notifications_Archiver_ShowLetters>Afficher les lettres</Notifications_Archiver_ShowLetters>
 
-	<Notifications_Archiver_MessageTab>Messages</Notifications_Archiver_MessageTab>
+	<Notifications_Archiver_ShowMessages>Afficher les messages</Notifications_Archiver_ShowMessages>
+
+	<Notifications_Archiver_TextFilter>Filtre de texte</Notifications_Archiver_TextFilter>
 
 	<Notifications_Archiver_TargetedMessage_Tooltip>Cliquez sur le message pour voir ce qu'il ciblait originellement.</Notifications_Archiver_TargetedMessage_Tooltip>	
 

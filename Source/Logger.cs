@@ -7,6 +7,10 @@ namespace Notifications_Archiver
 	{
 		private List<MasterArchive> archives = new List<MasterArchive>();
 
+		internal bool ShowLetters = true;
+
+		internal bool ShowMessages = true;
+
 		public List<MasterArchive> MasterArchives
 		{
 			get
@@ -30,8 +34,6 @@ namespace Notifications_Archiver
 
 		public override void ExposeData()
 		{
-			Scribe_Collections.Look<MasterArchive>(ref this.archives, "masterArchiveMembers", LookMode.Deep);
-
 			if (Scribe.mode == LoadSaveMode.Saving)
 			{
 				if (archives.RemoveAll((MasterArchive m) => m == null) != 0)
@@ -39,6 +41,10 @@ namespace Notifications_Archiver
 					Log.Error("Notification Archiver :: Some MasterArchives were null.");
 				}
 			}
+
+			Scribe_Collections.Look<MasterArchive>(ref this.archives, "masterArchiveMembers", LookMode.Deep);
+			Scribe_Values.Look(ref this.ShowLetters, "ShowLetters", true);
+			Scribe_Values.Look(ref this.ShowMessages, "ShowMessages", true);
 		}
 
 		//Empty constructors due to A17 bug
