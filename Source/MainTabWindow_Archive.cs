@@ -164,7 +164,36 @@ namespace Notifications_Archiver
 
 				if (master.message.lookTarget.IsValid)
 				{
-					GUI.DrawTexture(iconRect, ContentFinder<Texture2D>.Get("UI/Letters/LetterUnopened"));
+					//Draw appropriate texture
+					{
+						var thing = master.message.lookTarget.Thing;
+
+						if (thing != null)
+						{
+							//Adjust iconRect to accomodate texture
+							iconRect.y = rect.y;
+							iconRect.height = rect.height;
+
+							if (thing is Pawn)
+							{
+								var pawn = thing as Pawn;
+								var sizeVector = new Vector2(iconRect.width, iconRect.height);
+
+								GUI.DrawTexture(iconRect, PortraitsCache.Get(pawn, sizeVector));
+							}
+
+							else
+							{
+								var vector3 = new Vector3(iconRect.x, iconRect.y);
+								thing.Graphic.Draw(vector3, Rot4.North, thing);
+							}
+						}
+
+						else
+						{
+							GUI.DrawTexture(iconRect, ContentFinder<Texture2D>.Get("UI/Letters/CustomChoiceLetter"));
+						}
+					}
 
 					Widgets.DrawHighlightIfMouseover(rect);
 
