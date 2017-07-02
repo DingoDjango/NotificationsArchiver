@@ -174,17 +174,50 @@ namespace Notifications_Archiver
 							iconRect.y = rect.y;
 							iconRect.height = rect.height;
 
-							if (thing is Pawn)
+							//Get thing texture and draw (Widgets.ThingIcon code without Rect adjustment)
 							{
-								var pawn = thing as Pawn;
-								var sizeVector = new Vector2(iconRect.width, iconRect.height);
+								GUI.color = thing.DrawColor;
+								Texture resolvedIcon;
 
-								GUI.DrawTexture(iconRect, PortraitsCache.Get(pawn, sizeVector));
-							}
+								if (!thing.def.uiIconPath.NullOrEmpty())
+								{
+									resolvedIcon = thing.def.uiIcon;
+								}
 
-							else
-							{
-								GUI.DrawTexture(iconRect, thing.Graphic.MatSingle.mainTexture);
+								else if (thing is Pawn || thing is Corpse)
+								{
+									Pawn pawn = thing as Pawn;
+
+									if (pawn == null)
+									{
+										pawn = ((Corpse)thing).InnerPawn;
+									}
+
+									if (!pawn.RaceProps.Humanlike)
+									{
+										if (!pawn.Drawer.renderer.graphics.AllResolved)
+										{
+											pawn.Drawer.renderer.graphics.ResolveAllGraphics();
+										}
+										Material matSingle = pawn.Drawer.renderer.graphics.nakedGraphic.MatSingle;
+										resolvedIcon = matSingle.mainTexture;
+										GUI.color = matSingle.color;
+									}
+
+									else
+									{
+										Vector2 rectVector = new Vector2(iconRect.width, iconRect.height);
+										resolvedIcon = PortraitsCache.Get(pawn, rectVector);
+									}
+								}
+
+								else
+								{
+									resolvedIcon = thing.Graphic.ExtractInnerGraphicFor(thing).MatSingle.mainTexture;
+								}
+
+								GUI.DrawTexture(iconRect, resolvedIcon); //Draw texture
+								GUI.color = Color.white; //Reset
 							}
 						}
 
