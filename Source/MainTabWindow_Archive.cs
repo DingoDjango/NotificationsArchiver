@@ -184,8 +184,7 @@ namespace Notifications_Archiver
 
 							else
 							{
-								var vector3 = new Vector3(iconRect.x, iconRect.y);
-								thing.Graphic.Draw(vector3, Rot4.North, thing);
+								GUI.DrawTexture(iconRect, thing.Graphic.MatSingle.mainTexture);
 							}
 						}
 
