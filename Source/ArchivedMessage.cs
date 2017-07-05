@@ -5,14 +5,12 @@ namespace Notifications_Archiver
 {
 	public class ArchivedMessage : IExposable
 	{
-		public string text;
+		public string text = string.Empty;
 
 		public GlobalTargetInfo lookTarget = GlobalTargetInfo.Invalid;
 
 		public ArchivedMessage()
 		{
-			this.text = null;
-			this.lookTarget = GlobalTargetInfo.Invalid;
 		}
 
 		public ArchivedMessage(string txt, GlobalTargetInfo targetInfo)
@@ -25,7 +23,7 @@ namespace Notifications_Archiver
 		{
 			if (Scribe.mode == LoadSaveMode.Saving)
 			{
-				if (this.lookTarget.ThingDestroyed)
+				if (!this.lookTarget.IsValid || this.lookTarget.ThingDestroyed)
 				{
 					this.lookTarget = GlobalTargetInfo.Invalid;
 				}

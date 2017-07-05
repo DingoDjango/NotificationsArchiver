@@ -7,54 +7,51 @@ namespace Notifications_Archiver
 {
 	public class MasterArchive : IExposable
 	{
-		public int dateDayofSeason;
+		public int dateDayofSeason = -1;
 
-		public Quadrum dateQuadrum;
+		public Quadrum dateQuadrum = Quadrum.Undefined;
 
-		public int dateYear;
+		public int dateYear = -1;
 
-		public Letter letter;
+		public Letter letter = null;
 
-		public ArchivedMessage message;
+		public ArchivedMessage message = null;
 
-		//Null constructor
 		public MasterArchive()
 		{
-			this.dateDayofSeason = -1;
-			this.dateQuadrum = Quadrum.Undefined;
-			this.dateYear = -1;
-			this.letter = null;
-			this.message = null;
 		}
 
 		//Letter constructor
-		public MasterArchive(Letter let) : this()
+		public MasterArchive(Letter let)
 		{
 			this.letter = let;
 
-			SetDateInfo();
+			this.SetDateInfo();
 		}
 
 		//ArchivedMessage constructor
-		public MasterArchive(ArchivedMessage msg) : this()
+		public MasterArchive(ArchivedMessage msg)
 		{
 			this.message = msg;
 
-			SetDateInfo();
+			this.SetDateInfo();
 		}
 
 		private void SetDateInfo()
 		{
 			//Try to get a location for date calculations (RimWorld.DateReadout.DateOnGUI)
 			Vector2 location;
+
 			if (WorldRendererUtility.WorldRenderedNow && Find.WorldSelector.selectedTile >= 0)
 			{
 				location = Find.WorldGrid.LongLatOf(Find.WorldSelector.selectedTile);
 			}
+
 			else if (WorldRendererUtility.WorldRenderedNow && Find.WorldSelector.NumSelectedObjects > 0)
 			{
 				location = Find.WorldGrid.LongLatOf(Find.WorldSelector.FirstSelectedObject.Tile);
 			}
+
 			else
 			{
 				if (Find.VisibleMap == null)
@@ -82,11 +79,11 @@ namespace Notifications_Archiver
 
 		public void ExposeData()
 		{
-			Scribe_Values.Look<int>(ref this.dateDayofSeason, "dateDayofSeason", -1);
-			Scribe_Values.Look<Quadrum>(ref this.dateQuadrum, "dateQuadrum", Quadrum.Undefined);
-			Scribe_Values.Look<int>(ref this.dateYear, "dateYear", -1);
-			Scribe_Deep.Look<Letter>(ref this.letter, "letter", new object[0]);
-			Scribe_Deep.Look<ArchivedMessage>(ref this.message, "message", new object[0]);
+			Scribe_Values.Look(ref this.dateDayofSeason, "dateDayofSeason", -1);
+			Scribe_Values.Look(ref this.dateQuadrum, "dateQuadrum", Quadrum.Undefined);
+			Scribe_Values.Look(ref this.dateYear, "dateYear", -1);
+			Scribe_Deep.Look(ref this.letter, "letter", new object[0]);
+			Scribe_Deep.Look(ref this.message, "message", new object[0]);
 		}
 	}
 }

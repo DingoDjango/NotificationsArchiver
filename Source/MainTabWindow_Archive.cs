@@ -12,20 +12,18 @@ namespace Notifications_Archiver
 
 		private const float dateWidth = 100f; //Relatively wide to account for some languages' date strings
 
-		private Logger logger = Current.Game.GetComponent<Logger>();
+		#region Translation Strings
+		private static string labelShowLetters = "Notifications_Archiver_ShowLetters".Translate();
 
-		private string listFilter;
+		private static string labelShowMessages = "Notifications_Archiver_ShowMessages".Translate();
 
-		private Vector2 scrollPosition;
+		private static string labelTextFilter = "Notifications_Archiver_TextFilter".Translate();
 
-		//Translation strings
-		private string showLettersLabel = "Notifications_Archiver_ShowLetters".Translate();
-		private string showMessagesLabel = "Notifications_Archiver_ShowMessages".Translate();
-		private string textFilterLabel = "Notifications_Archiver_TextFilter".Translate();
-		private string targetedMessageTooltip = "Notifications_Archiver_TargetedMessage_Tooltip".Translate();
-		private string dateUnknown = "Notifications_Archiver_Date_None".Translate();
+		private static string tooltipTargetedMessage = "Notifications_Archiver_TargetedMessage_Tooltip".Translate();
 
-		private string MasterDate(MasterArchive master)
+		private static string dateUnknown = "Notifications_Archiver_Date_None".Translate();
+
+		private static string MasterDate(MasterArchive master)
 		{
 			if (master.dateDayofSeason != -1 && master.dateQuadrum != Quadrum.Undefined && master.dateYear != -1)
 			{
@@ -37,8 +35,21 @@ namespace Notifications_Archiver
 				});
 			}
 
-			return this.dateUnknown;
+			return dateUnknown;
 		}
+		#endregion
+
+		private Logger logger = Current.Game.GetComponent<Logger>();
+
+		private string listFilter;
+
+		private float lengthShowLetters;
+
+		private float lengthShowMessages;
+
+		private float lengthTextFilterLabel;
+
+		private Vector2 scrollPosition;
 
 		public override Vector2 RequestedTabSize
 		{
@@ -48,10 +59,16 @@ namespace Notifications_Archiver
 			}
 		}
 
-		public override void PostOpen()
+		public override void PreOpen()
 		{
-			base.PostOpen();
+			base.PreOpen();
+
 			this.listFilter = string.Empty;
+
+			Text.Font = GameFont.Small;
+			this.lengthShowLetters = Text.CalcSize(labelShowLetters).x;
+			this.lengthShowMessages = Text.CalcSize(labelShowMessages).x;
+			this.lengthTextFilterLabel = Text.CalcSize(labelTextFilter).x;
 		}
 
 		public override void DoWindowContents(Rect inRect)
@@ -60,10 +77,7 @@ namespace Notifications_Archiver
 			GUI.color = Color.white;
 			Text.Font = GameFont.Small;
 
-			//Options rects
-			float lengthShowLetters = Text.CalcSize(this.showLettersLabel).x;
-			float lengthShowMessages = Text.CalcSize(this.showMessagesLabel).x;
-			float lengthTextFilterLabel = Text.CalcSize(this.textFilterLabel).x;
+			//Options rects			
 			Rect optionsRect = new Rect(inRect.x, inRect.y, inRect.width, Text.LineHeight * 1.2f);
 			Rect optionsLetters = new Rect(optionsRect.x, optionsRect.y, lengthShowLetters + 34f, optionsRect.height);
 			Rect optionsMessages = new Rect(optionsLetters.xMax + 10f, optionsRect.y, lengthShowMessages + 34f, optionsRect.height);
@@ -78,9 +92,9 @@ namespace Notifications_Archiver
 
 			//Draw options
 			Text.Anchor = TextAnchor.MiddleLeft;
-			Widgets.CheckboxLabeled(optionsLetters, this.showLettersLabel, ref logger.ShowLetters);
-			Widgets.CheckboxLabeled(optionsMessages, this.showMessagesLabel, ref logger.ShowMessages);
-			Widgets.Label(optionsFilterLabel, this.textFilterLabel);
+			Widgets.CheckboxLabeled(optionsLetters, labelShowLetters, ref logger.ShowLetters);
+			Widgets.CheckboxLabeled(optionsMessages, labelShowMessages, ref logger.ShowMessages);
+			Widgets.Label(optionsFilterLabel, labelTextFilter);
 			this.listFilter = Widgets.TextField(optionsFilterBox, this.listFilter);
 			Text.Anchor = TextAnchor.UpperLeft; //Reset
 
@@ -229,7 +243,7 @@ namespace Notifications_Archiver
 
 					Widgets.DrawHighlightIfMouseover(rect);
 
-					TooltipHandler.TipRegion(rect, this.targetedMessageTooltip);
+					TooltipHandler.TipRegion(rect, tooltipTargetedMessage);
 
 					if (Widgets.ButtonInvisible(rect, false))
 					{
@@ -246,6 +260,8 @@ namespace Notifications_Archiver
 		//Filter provider for the scrollable list
 		private bool MatchesSettings(MasterArchive m)
 		{
+			string mDate = MasterDate(m);
+
 			if (logger.ShowLetters && m.letter != null || logger.ShowMessages && m.message != null)
 			{
 				if (listFilter == string.Empty)
@@ -255,7 +271,7 @@ namespace Notifications_Archiver
 
 				else if (m.letter != null)
 				{
-					if (MasterDate(m).IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0 || m.letter.label.IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0)
+					if (mDate.IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0 || m.letter.label.IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0)
 					{
 						return true; //Returns true if the text filter matches part of the Letter's date/label
 					}
@@ -273,7 +289,7 @@ namespace Notifications_Archiver
 
 				else if (m.message != null)
 				{
-					if (MasterDate(m).IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0 || m.message.text.IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0)
+					if (mDate.IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0 || m.message.text.IndexOf(listFilter, StringComparison.OrdinalIgnoreCase) >= 0)
 					{
 						return true; //Returns true if the text filter matches part of the message's date/text
 					}
