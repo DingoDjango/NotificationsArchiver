@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Notifications_Archiver_ShowLetters>通知を見る</Notifications_Archiver_ShowLetters>
+
+  <Notifications_Archiver_ShowMessages>メッセージを見る</Notifications_Archiver_ShowMessages>
+
+  <Notifications_Archiver_TextFilter>文字フィルター:</Notifications_Archiver_TextFilter>
+
+  <Notifications_Archiver_TargetedMessage_Tooltip>このメッセージをクリックすると、元のターゲットを追跡できます。</Notifications_Archiver_TargetedMessage_Tooltip>
+
+  <Notifications_Archiver_Date_Readout>{0} {1},\n{2}</Notifications_Archiver_Date_Readout>
+
+  <Notifications_Archiver_Date_None>日付\n不明</Notifications_Archiver_Date_None>
+
+</LanguageData>
