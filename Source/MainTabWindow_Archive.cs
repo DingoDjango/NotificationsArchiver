@@ -12,6 +12,18 @@ namespace Notifications_Archiver
 
 		private const float dateWidth = 100f; //Relatively wide to account for some languages' date strings
 
+		private Logger logger = Current.Game.GetComponent<Logger>();
+
+		private string listFilter;
+
+		private float lengthShowLetters;
+
+		private float lengthShowMessages;
+
+		private float lengthTextFilterLabel;
+
+		private Vector2 scrollPosition;
+
 		#region Translation Strings
 		private static string labelShowLetters = "Notifications_Archiver_ShowLetters".Translate();
 
@@ -38,18 +50,6 @@ namespace Notifications_Archiver
 			return dateUnknown;
 		}
 		#endregion
-
-		private Logger logger = Current.Game.GetComponent<Logger>();
-
-		private string listFilter;
-
-		private float lengthShowLetters;
-
-		private float lengthShowMessages;
-
-		private float lengthTextFilterLabel;
-
-		private Vector2 scrollPosition;
 
 		public override Vector2 RequestedTabSize
 		{

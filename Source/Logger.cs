@@ -29,17 +29,16 @@ namespace Notifications_Archiver
 				var choiceLet = letterArchive.letter as ChoiceLetter;
 
 				//Dummify complex letters to avoid players exploiting the archiver
-				if (choiceLet.TimeoutActive)
 				{
-					var toDummyLetter = new DummyStandardLetter();
-					toDummyLetter.def = choiceLet.def;
-					toDummyLetter.label = choiceLet.label;
-					toDummyLetter.lookTarget = choiceLet.lookTarget;
-					toDummyLetter.disappearAtTick = -1;
-					toDummyLetter.title = choiceLet.title;
-					toDummyLetter.text = choiceLet.text;
+					var dummyLetter = new DummyStandardLetter();
+					dummyLetter.def = choiceLet.def;
+					dummyLetter.label = choiceLet.label;
+					dummyLetter.lookTarget = choiceLet.lookTarget;
+					dummyLetter.disappearAtTick = -1;
+					dummyLetter.title = choiceLet.title;
+					dummyLetter.text = choiceLet.text;
 
-					letterArchive.letter = toDummyLetter;
+					letterArchive.letter = dummyLetter;
 				}
 			}
 
