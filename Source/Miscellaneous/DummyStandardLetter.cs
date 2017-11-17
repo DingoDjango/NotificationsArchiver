@@ -9,7 +9,7 @@ namespace Notifications_Archiver
 		{
 			get
 			{
-				yield return DiaOption.DefaultOK; //Using DefaultOK as base.OK would remove the Letter if it's still active
+				yield return DiaOption.DefaultOK; //Using base.OK would remove the Letter if it's still active
 
 				if (this.lookTarget.IsValid)
 				{

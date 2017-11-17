@@ -1,16 +1,146 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-	<Notifications_Archiver_ShowLetters>Show Letters</Notifications_Archiver_ShowLetters>
+<<<<<<< HEAD
+	<!-- Mod Settings -->
 
-	<Notifications_Archiver_ShowMessages>Show Messages</Notifications_Archiver_ShowMessages>
+	<Archiver_ClearArchives>Clear All Archives</Archiver_ClearArchives>
 
-	<Notifications_Archiver_TextFilter>Text Filter:</Notifications_Archiver_TextFilter>
+	<Archiver_UseSounds>Mod sounds</Archiver_UseSounds>
 
-	<Notifications_Archiver_TargetedMessage_Tooltip>You can click this message to track its original target.</Notifications_Archiver_TargetedMessage_Tooltip>
+	<Archiver_ShowPrompts>Show prompts</Archiver_ShowPrompts>
 
-	<Notifications_Archiver_Date_Readout>{0} {1},\n{2}</Notifications_Archiver_Date_Readout>
+	<!-- Tooltips -->
 
-	<Notifications_Archiver_Date_None>Date\nunknown</Notifications_Archiver_Date_None>
+	<Archiver_Tooltip_ClearArchives>Delete all unpinned archives from the current save.</Archiver_Tooltip_ClearArchives>
+
+	<Archiver_Tooltip_UseSounds>Play sounds on various triggers, such as deleting archives.</Archiver_Tooltip_UseSounds>
+
+	<Archiver_Tooltip_ShowPrompts>Open an 'Are you sure?' dialogue on various triggers, such as deleting archives.</Archiver_Tooltip_ShowPrompts>
+
+	<Archiver_Tooltip_EnableArchiving>If disabled, new notifications will not be saved.</Archiver_Tooltip_EnableArchiving>
+
+	<Archiver_Tooltip_ShowLetters>Filter letter notifications.\n\nLetters are event pop-ups such as "Eclipse" or "Raid".</Archiver_Tooltip_ShowLetters>
+
+	<Archiver_Tooltip_ShowMessages>Filter message notifications.\n\nMessages are text pop-ups displayed briefly at the top of the screen.</Archiver_Tooltip_ShowMessages>
+
+	<Archiver_Tooltip_TextFilter>Filter by keyword or phrase.\n\nYou may input dates, colonist names etc.</Archiver_Tooltip_TextFilter>
+
+	<Archiver_Tooltip_ListItem>{0}\n\nLeft-click: open (if available).\n\nRight-click: pin or delete archives.</Archiver_Tooltip_ListItem>
+
+	<!-- Messages -->
+
+	<Archiver_Error_NoGame>No active game found.</Archiver_Error_NoGame>
+
+	<Archiver_Error_NoArchives>Cannot clear archives if the list is empty or if there is no active game.</Archiver_Error_NoArchives>
+
+	<Archiver_Error_TriedToDeletePinned>Cannot delete pinned archives.</Archiver_Error_TriedToDeletePinned>
+
+	<!-- DiaNode (Prompt) Titles -->
+
+	<Archiver_Title_DeleteCurrent>Delete Specific Archive</Archiver_Title_DeleteCurrent>
+
+	<Archiver_Title_DeleteOlder>Delete Old Archives</Archiver_Title_DeleteOlder>
+
+	<Archiver_Title_EraseAll>Delete All Archives</Archiver_Title_EraseAll>
+
+	<!-- DiaNode Contents -->
+
+	<Archiver_Prompt_EraseAll>You are attempting to delete &lt;color=red&gt;ALL UNPINNED ARCHIVES&lt;/color&gt; stored in the active safe file.\n\nAre you sure you want to delete all saved data?</Archiver_Prompt_EraseAll>
+
+	<Archiver_Prompt_DeleteCurrent>This action will delete the selected archive.\n\nAre you sure you want to delete this archive?</Archiver_Prompt_DeleteCurrent>
+
+	<Archiver_Prompt_DeleteOlder>This action will delete all archives older than the selected archive.\n\nPinned archives will not be deleted.\n\nAre you sure you want to delete these archives?</Archiver_Prompt_DeleteOlder>
+
+	<!-- DiaOptions -->
+
+	<Archiver_Accept>Accept</Archiver_Accept>
+
+	<Archiver_Cancel>Cancel</Archiver_Cancel>
+
+	<!-- FloatMenuOptions -->
+
+	<Archiver_Pin>Pin (never delete)</Archiver_Pin>
+
+	<Archiver_Unpin>Unpin</Archiver_Unpin>
+
+	<Archiver_DeleteCurrent>Delete this item</Archiver_DeleteCurrent>
+
+	<Archiver_DeleteOlder>Delete all items older than this</Archiver_DeleteOlder>
+
+	<!-- Archive Window -->
+
+	<Archiver_EnableArchiving>Enable Archiving</Archiver_EnableArchiving>
+
+	<Archiver_ShowLetters>Show Letters</Archiver_ShowLetters>
+
+	<Archiver_ShowMessages>Show Messages</Archiver_ShowMessages>
+
+	<Archiver_TextFilter>Text Filter: </Archiver_TextFilter>
+
+	<Archiver_FormattedDate>{0} {1}, {2}</Archiver_FormattedDate>
+
+	<Archiver_UnknownDate>Unknown Date</Archiver_UnknownDate>
+=======
+	<!-- General -->
+
+	<Archiver_Accept>Accept</Archiver_Accept>
+
+	<Archiver_Cancel>Cancel</Archiver_Cancel>
+
+	<!-- Archive tab -->
+
+	<Archiver_EnableArchiving_Label>Enable Archiving</Archiver_EnableArchiving_Label>
+
+	<Archiver_EnableArchiving_Desc>If disabled, new notifications will not be saved.</Archiver_EnableArchiving_Desc>
+
+	<Archiver_ShowLetters_Label>Show Letters</Archiver_ShowLetters_Label>
+
+	<Archiver_ShowLetters_Desc>Filter letter notifications. Letters are event pop-ups such as "Eclipse" or "Raid".</Archiver_ShowLetters_Desc>
+
+	<Archiver_ShowMessages_Label>Show Messages</Archiver_ShowMessages_Label>
+
+	<Archiver_ShowMessages_Desc>Filter message notifications. Messages are pop-ups displayed briefly at the top of the screen.</Archiver_ShowMessages_Desc>
+
+	<Archiver_TextFilter_Label>Text Filter: </Archiver_TextFilter_Label>
+
+	<Archiver_TextFilter_Desc>Filter by keyword or phrase. You may input dates, colonist names etc.</Archiver_TextFilter_Desc>
+
+	<Archiver_Tooltip_ListItem>{0}\n\nLeft click: open a letter or jump to a message's target (if possible).\n\nRight click: open a sub-menu to delete archives.</Archiver_Tooltip_ListItem>
+
+	<Archiver_Tooltip_Pin>Pin (Skip when mass-clearing)</Archiver_Tooltip_Pin>
+
+	<Archiver_Tooltip_Unpin>Unpin</Archiver_Tooltip_Unpin>
+
+	<Archiver_Tooltip_DeleteCurrent>Delete this item</Archiver_Tooltip_DeleteCurrent>
+
+	<Archiver_Tooltip_DeleteOlder>Delete all items older than this</Archiver_Tooltip_DeleteOlder>
+
+	<Archiver_Date_Readout>{0} {1}, {2}</Archiver_Date_Readout>
+
+	<Archiver_Date_None>Unknown Date</Archiver_Date_None>
+
+	<!-- Options menu -->
+
+	<Archiver_Error_NoActiveLogger>No active game found.</Archiver_Error_NoActiveLogger>
+
+	<Archiver_ClearMasters_Label>Clear all archived notifications</Archiver_ClearMasters_Label>
+
+	<Archiver_Error_NoActiveList>Cannot clear archives if the list is empty or if there is no active game.</Archiver_Error_NoActiveList>
+
+	<!-- Prompts -->
+
+	<Archiver_Prompt_DeleteCurrent_Text>This action will delete the selected archive.\n\nAre you sure you want to delete this archive?</Archiver_Prompt_DeleteCurrent_Text>
+
+	<Archiver_Prompt_DeleteCurrent_Title>Delete Specific Archive</Archiver_Prompt_DeleteCurrent_Title>
+
+	<Archiver_Prompt_DeleteOlder_Text>This action will delete all archives older than the selected archive.\n\nPinned archives will not be deleted.\n\nAre you sure you want to delete these archives?</Archiver_Prompt_DeleteOlder_Text>
+
+	<Archiver_Prompt_DeleteOlder_Title>Delete Old Archives</Archiver_Prompt_DeleteOlder_Title>
+
+	<Archiver_Prompt_EraseAll_Text>This action will delete all archives in the active save file.\n\nAre you sure you want to delete all saved data?</Archiver_Prompt_EraseAll_Text>
+
+	<Archiver_Prompt_EraseAll_Title>Delete All Archives</Archiver_Prompt_EraseAll_Title>
+>>>>>>> 437f9dc8f531fbd3f6f40b701a9c6f97539db5a7
 
 </LanguageData>
