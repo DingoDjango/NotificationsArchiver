@@ -12,4 +12,4 @@ Right-click to pin or delete archives, in-case the list gets a bit crowded.
 
 Powered by [Harmony](https://github.com/pardeike/Harmony)
 
-Pin icon by Freepik (https://www.freepik.com/)
+Pin icon by [Freepik](https://www.freepik.com/)
