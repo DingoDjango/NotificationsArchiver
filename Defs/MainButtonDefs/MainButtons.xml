@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
+<MainButtonDefs>
 
 	<MainButtonDef>
 		<defName>NotificationsArchive</defName>
@@ -9,4 +9,4 @@
 		<order>75</order>
 	</MainButtonDef>
 
-</Defs>
+</MainButtonDefs>
