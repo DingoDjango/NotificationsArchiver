@@ -4,7 +4,9 @@
 	<author>Dingo</author>
 	<url>https://ludeon.com/forums/index.php?topic=26077</url>
 	<targetVersion>0.18.0</targetVersion>
-	<description>This mod introduces the "Archive" tab.
+	<description>&lt;color=red&gt;Requires HugsLib.&lt;/color&gt;
+
+This mod introduces the "Archive" tab.
 
 The Archive preserves pop-up notifications and lets you browse them on-demand. This includes the temporary messages at the top of the in-game UI.
 

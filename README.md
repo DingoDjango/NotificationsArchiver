@@ -1,5 +1,7 @@
 ![Notifications Archiver](https://i.imgur.com/LiOXVXW.png)
 
+**Requires HugsLib**
+
 This mod introduces the "Archive" tab.
 
 The Archive preserves pop-up notifications and lets you browse them on-demand. This includes the temporary messages at the top of the in-game UI.
