@@ -14,7 +14,7 @@ namespace Notifications_Archiver
 		{
 			if (Current.ProgramState == ProgramState.Playing)
 			{
-				Current.Game.GetComponent<Archiver>()?.NewArchive(let, string.Empty, GlobalTargetInfo.Invalid);
+				Current.Game.GetComponent<Archiver>()?.NewArchive(let, "", GlobalTargetInfo.Invalid);
 			}
 		}
 	}

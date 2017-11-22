@@ -30,7 +30,7 @@ namespace Notifications_Archiver
 
 		private List<MasterArchive> cachedArchives = new List<MasterArchive>();
 
-		private string listFilter = string.Empty;
+		private string listFilter = "";
 
 		private Vector2 scrollPosition = Vector2.zero;
 
@@ -57,7 +57,7 @@ namespace Notifications_Archiver
 
 			return this.archiver.MasterArchives.FindAll(archive =>
 			(this.archiver.ShowLetters && archive.type == ArchiveType.Letter || this.archiver.ShowMessages && archive.type == ArchiveType.Message)
-			&& (this.listFilter == string.Empty ||
+			&& (this.listFilter == "" ||
 				MatchesFilter(this.MasterDate(archive)) ||
 				MatchesFilter(archive.Label) ||
 				MatchesFilter(archive.Text))
@@ -105,16 +105,16 @@ namespace Notifications_Archiver
 
 		public override Vector2 RequestedTabSize => new Vector2(WindowWidth, UI.screenHeight * 0.85f);
 
-		public override void WindowOnGUI()
+		public override void WindowUpdate()
 		{
-			if (mustRecacheList)
+			if (mustRecacheList || this.cachedArchives.Count == 0)
 			{
 				this.cachedArchives = this.GetCachedArchives();
 
 				mustRecacheList = false;
 			}
 
-			base.WindowOnGUI();
+			base.WindowUpdate();
 		}
 
 		public override void DoWindowContents(Rect inRect)
@@ -221,11 +221,6 @@ namespace Notifications_Archiver
 			}
 
 			Widgets.EndScrollView();
-		}
-
-		public override void PostClose()
-		{
-			this.listFilter = string.Empty;
 		}
 	}
 }
