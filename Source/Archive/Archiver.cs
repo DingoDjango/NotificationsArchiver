@@ -12,6 +12,8 @@ namespace Notifications_Archiver
 
 		private Queue<Action> queuedCleanup = new Queue<Action>();
 
+		private Dictionary<MasterArchive, bool> currentlyQueued = new Dictionary<MasterArchive, bool>();
+
 		private Action currentCleanup = null;
 
 		public int ticksSinceArchiveValidation = 0;
@@ -24,7 +26,7 @@ namespace Notifications_Archiver
 
 		public List<MasterArchive> MasterArchives => this.archives;
 
-		private void ValidateArchiveTarget(MasterArchive archive)
+		public void ValidateArchiveTarget(MasterArchive archive)
 		{
 			Predicate<GlobalTargetInfo> invalidTarget = target => !target.IsValid || target.ThingDestroyed || (target.HasThing && target.Thing.MapHeld == null);
 
@@ -43,6 +45,7 @@ namespace Notifications_Archiver
 				archive.lookTarget = GlobalTargetInfo.Invalid;
 			}
 
+			this.currentlyQueued[archive] = false;
 			this.ticksSinceArchiveValidation = 0;
 			this.currentCleanup = null;
 		}
@@ -87,10 +90,17 @@ namespace Notifications_Archiver
 
 		public void QueueArchiveCleanup(MasterArchive master)
 		{
-			this.queuedCleanup.Enqueue(delegate
+			this.currentlyQueued.TryGetValue(master, out bool queued);
+
+			if (!queued)
 			{
-				this.ValidateArchiveTarget(master);
-			});
+				this.queuedCleanup.Enqueue(delegate
+				{
+					this.ValidateArchiveTarget(master);
+				});
+
+				this.currentlyQueued[master] = true;
+			}
 		}
 
 		public override void GameComponentUpdate()

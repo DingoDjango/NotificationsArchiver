@@ -121,7 +121,7 @@ namespace Notifications_Archiver
 		{
 			if (Scribe.mode == LoadSaveMode.Saving)
 			{
-				Controller.GetArchiver.QueueArchiveCleanup(this);
+				Controller.GetArchiver.ValidateArchiveTarget(this);
 			}
 
 			Scribe_Values.Look(ref this.type, "type");

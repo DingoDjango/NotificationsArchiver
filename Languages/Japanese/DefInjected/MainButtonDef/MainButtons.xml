@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <NotificationsArchive.label>履歴</NotificationsArchive.label>
-  <NotificationsArchive.description>急に閉じられてしまった過去の警告メッセージや、最近の警告(通知文)を閲覧します。</NotificationsArchive.description>
-
+	<NotificationsArchive.label>履歴</NotificationsArchive.label>
+	<NotificationsArchive.description>急に閉じられてしまった過去の警告メッセージや、最近の警告(通知文)を閲覧します。</NotificationsArchive.description>
 
 </LanguageData>
