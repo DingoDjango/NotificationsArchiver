@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using RimWorld;
 using RimWorld.Planet;
 using Verse;
 
@@ -8,6 +10,12 @@ namespace Notifications_Archiver
 	{
 		private List<MasterArchive> archives = new List<MasterArchive>();
 
+		private Queue<Action> queuedCleanup = new Queue<Action>();
+
+		private Action currentCleanup = null;
+
+		public int ticksSinceArchiveValidation = 0;
+
 		public bool EnableArchiving = true;
 
 		public bool ShowLetters = true;
@@ -15,6 +23,29 @@ namespace Notifications_Archiver
 		public bool ShowMessages = true;
 
 		public List<MasterArchive> MasterArchives => this.archives;
+
+		private void ValidateArchiveTarget(MasterArchive archive)
+		{
+			Predicate<GlobalTargetInfo> invalidTarget = target => !target.IsValid || target.ThingDestroyed || (target.HasThing && target.Thing.MapHeld == null);
+
+			Letter letter = archive.letter;
+
+			if (letter != null)
+			{
+				if (invalidTarget(letter.lookTarget))
+				{
+					letter.lookTarget = GlobalTargetInfo.Invalid;
+				}
+			}
+
+			else if (invalidTarget(archive.lookTarget))
+			{
+				archive.lookTarget = GlobalTargetInfo.Invalid;
+			}
+
+			this.ticksSinceArchiveValidation = 0;
+			this.currentCleanup = null;
+		}
 
 		public void NewArchive(Letter letter, string text, GlobalTargetInfo target)
 		{
@@ -51,6 +82,41 @@ namespace Notifications_Archiver
 				this.archives.Add(newArchive);
 
 				MainTabWindow_Archive.mustRecacheList = true;
+			}
+		}
+
+		public void QueueArchiveCleanup(MasterArchive master)
+		{
+			this.queuedCleanup.Enqueue(delegate
+			{
+				this.ValidateArchiveTarget(master);
+			});
+		}
+
+		public override void GameComponentUpdate()
+		{
+			base.GameComponentUpdate();
+
+			this.currentCleanup?.Invoke();
+
+			if (this.currentCleanup == null && this.queuedCleanup.Count > 0)
+			{
+				this.currentCleanup = this.queuedCleanup.Dequeue();
+			}
+		}
+
+		public override void GameComponentTick()
+		{
+			base.GameComponentTick();
+
+			if (++this.ticksSinceArchiveValidation == GenDate.TicksPerDay)
+			{
+				this.ticksSinceArchiveValidation = 0;
+
+				for (int i = 0; i < this.archives.Count; i++)
+				{
+					this.QueueArchiveCleanup(this.archives[i]);
+				}
 			}
 		}
 

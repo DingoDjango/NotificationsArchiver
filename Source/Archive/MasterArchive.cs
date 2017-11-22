@@ -121,10 +121,7 @@ namespace Notifications_Archiver
 		{
 			if (Scribe.mode == LoadSaveMode.Saving)
 			{
-				if (!this.lookTarget.IsValid || this.lookTarget.ThingDestroyed || (this.lookTarget.HasThing && this.lookTarget.Thing.MapHeld == null))
-				{
-					this.lookTarget = GlobalTargetInfo.Invalid;
-				}
+				Controller.GetArchiver.QueueArchiveCleanup(this);
 			}
 
 			Scribe_Values.Look(ref this.type, "type");
@@ -134,7 +131,7 @@ namespace Notifications_Archiver
 			Scribe_Values.Look(ref this.dateQuadrum, "dateQuadrum", Quadrum.Undefined);
 			Scribe_Values.Look(ref this.dateYear, "dateYear", -1);
 
-			Scribe_Deep.Look(ref this.letter, "letter", new object[0]);
+			Scribe_Deep.Look(ref this.letter, "letter");
 			Scribe_TargetInfo.Look(ref this.lookTarget, "lookTarget");
 			Scribe_Values.Look(ref this.text, "text");
 		}
