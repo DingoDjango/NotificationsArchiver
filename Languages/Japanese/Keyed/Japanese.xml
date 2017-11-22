@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Mod Settings -->
+
+  <Archiver_ClearArchives>履歴をすべて消去</Archiver_ClearArchives>
+
+  <Archiver_UseSounds>Modの音</Archiver_UseSounds>
+
+  <Archiver_ShowPrompts>プロンプトを表示</Archiver_ShowPrompts>
+
+  <!-- Tooltips -->
+
+  <Archiver_Tooltip_ClearArchives>現在のセーブから既読メッセージをすべて消去します。</Archiver_Tooltip_ClearArchives>
+
+  <Archiver_Tooltip_UseSounds>履歴の削除など、さまざまなトリガーでサウンドを再生します。</Archiver_Tooltip_UseSounds>
+
+  <Archiver_Tooltip_ShowPrompts>履歴の削除などで表示される「本当に行いますか？」などの、さまざまなトリガーに関する対話設定です。</Archiver_Tooltip_ShowPrompts>
+
+  <Archiver_Tooltip_EnableArchiving>無効にすると、新しい通知は保存されません。</Archiver_Tooltip_EnableArchiving>
+
+  <Archiver_Tooltip_ShowLetters>警告をフィルタリングします。\n\n「日食」や「襲撃!」などのイベントのポップアップは警告です。</Archiver_Tooltip_ShowLetters>
+
+  <Archiver_Tooltip_ShowMessages>メッセージ文の通知をフィルタリングします。\n\nメッセージ文の通知は、画面の上部に短く表示されるテキストのポップアップです。</Archiver_Tooltip_ShowMessages>
+
+  <Archiver_Tooltip_TextFilter>キーワードや語句でフィルタリングします。\n\n日付、入植者の名前などを入力できます。</Archiver_Tooltip_TextFilter>
+
+  <Archiver_Tooltip_ListItem>{0}\n\n左クリック：開く(利用可能な場合)。\n\n右クリック：履歴をピンする、または削除します。</Archiver_Tooltip_ListItem>
+
+  <!-- Messages -->
+
+  <Archiver_Error_NoGame>動作中のゲームがない</Archiver_Error_NoGame>
+
+  <Archiver_Error_NoArchives>リストが空だったり、または動作中のゲームがない場合、履歴を消去できません。</Archiver_Error_NoArchives>
+
+  <Archiver_Error_TriedToDeletePinned>ピンされた履歴は削除できません。</Archiver_Error_TriedToDeletePinned>
+
+  <!-- DiaNode (Prompt) Titles -->
+
+  <Archiver_Title_DeleteCurrent>特定の履歴を消去</Archiver_Title_DeleteCurrent>
+
+  <Archiver_Title_DeleteOlder>古い履歴を消去</Archiver_Title_DeleteOlder>
+
+  <Archiver_Title_EraseAll>すべての履歴を消去</Archiver_Title_EraseAll>
+
+  <!-- DiaNode Contents -->
+
+  <Archiver_Prompt_EraseAll>利用可能なセーブファイルに保存されている&lt;color=red&gt;すべてのピン解除された履歴&lt;/color&gt;を消去しようとしています。\n\nセーブファイルからすべての履歴データを消去してもよろしいですか？</Archiver_Prompt_EraseAll>
+
+  <Archiver_Prompt_DeleteCurrent>この操作は選択した履歴を消去します。\n\n本当にこの履歴を消去してもよろしいですか？</Archiver_Prompt_DeleteCurrent>
+
+  <Archiver_Prompt_DeleteOlder>この操作は、選択した履歴より古いすべてのアーカイブを消去します。\n\nピンされた履歴は消去されません。\n\nこれらの履歴を消去してもよろしいですか？</Archiver_Prompt_DeleteOlder>
+
+  <!-- DiaOptions -->
+
+  <Archiver_Accept>了承</Archiver_Accept>
+
+  <Archiver_Cancel>中止</Archiver_Cancel>
+
+  <!-- FloatMenuOptions -->
+
+  <Archiver_Pin>ピン(消去不可)</Archiver_Pin>
+
+  <Archiver_Unpin>ピン解除</Archiver_Unpin>
+
+  <Archiver_DeleteCurrent>このアイテムを消去</Archiver_DeleteCurrent>
+
+  <Archiver_DeleteOlder>これより古いアイテムを全て消去</Archiver_DeleteOlder>
+
+  <!-- Archive Window -->
+
+  <Archiver_EnableArchiving>履歴を有効化</Archiver_EnableArchiving>
+
+  <Archiver_ShowLetters>警告を表示</Archiver_ShowLetters>
+
+  <Archiver_ShowMessages>メッセージ文を表示</Archiver_ShowMessages>
+
+  <Archiver_TextFilter>文字フィルタ: </Archiver_TextFilter>
+
+  <Archiver_FormattedDate>{0} {1}, {2}</Archiver_FormattedDate>
+
+  <Archiver_UnknownDate>日付不明</Archiver_UnknownDate>
+
+</LanguageData>
